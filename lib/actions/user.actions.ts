@@ -1,17 +1,18 @@
 'use server'
 
 import { CreateUserParams, UpdateUserParams } from "@/types"
-import { handleError } from "../utils"
-import { connectToDatabase } from "../database"
+import { handleError } from "@/lib/utils"
+import { connectToDatabase } from "@/lib/database"
 import { revalidatePath } from "next/cache"
-import User from "../database/models/user.model"
-import Event from "../database/models/even.model"
-import Order from "../database/models/order.model"
+import User from "@/lib/database/models/user.model"
+import Event from "@/lib/database/models/even.model"
+import Order from "@/lib/database/models/order.model"
 
 
 export const createUser = async (user: CreateUserParams) =>{
    try {
-      await connectToDatabase();
+      const a = await connectToDatabase();
+      console.log("hell",a);
       const newUser = await User.create(user);
       return JSON.parse(JSON.stringify(newUser));
    } catch (error) {
