@@ -23,13 +23,13 @@ const Header = () => {
 
             <div className='flex w-32 justify-end gap-3'>
                <SignedIn>
-                  <UserButton afterSignOutUrl='/' />
+                  <UserButton afterSignOutUrl="/" />
                   <MobileNav />
                </SignedIn>
 
                <SignedOut>
                   <Button asChild className='rounded-full' size='lg'>
-                     <Link href='/sign-in'>
+                     <Link href="/sign-in">
                         Login
                      </Link>
                   </Button>
