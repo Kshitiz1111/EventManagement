@@ -17,9 +17,6 @@ export interface IEvent extends Document {
  }
 
 const EventSchema = new Schema({
-   clerkId: {type: String, required: true, unique: true},
-   email: {type: String, required: true, unique: true},
-   username: {type: String, required: true, unique: true},
    title: {type: String, required: true},
    description: {type: String},
    location: {type: String},
@@ -29,6 +26,7 @@ const EventSchema = new Schema({
    endDateTime: {type: Date, default: Date.now},
    price: {type: String},
    isFree: {type: Boolean, default: false},
+   url: { type: String },
    category: {type: Schema.Types.ObjectId, ref: 'Category'},
    organizer: {type: Schema.Types.ObjectId, ref: 'User'},
 
