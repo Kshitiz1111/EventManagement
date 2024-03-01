@@ -28,17 +28,20 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
          {/* IS EVENT CREATOR ... */}
 
          {isEventCreator && !hidePrice && (
-            <Link href={`/events/${event._id}/update`}>
-               <div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white shadow-sm transition-all">
+
+            <div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white shadow-sm transition-all">
+               <Link href={`/events/${event._id}/update`}>
                   <div className="px-3 py-2 rounded-xl shadow-sm hover:shadow-lg transition-all">
                      <Image src="/assets/icons/edit.svg" alt="edit" width={20} height={20} />
                   </div>
-                  <div className="rounded-xl px-3 hover:shadow-lg transition-all">
-                     <DeleteConfirmation eventId={event._id} />
-                  </div>
+               </Link>
+               <div className="rounded-xl px-3 hover:shadow-lg transition-all">
+                  <DeleteConfirmation eventId={event._id} />
                </div>
-            </Link>
-         )}
+            </div>
+
+         )
+         }
          <Link href={`/events/${event._id}`}>
 
             <div
@@ -73,7 +76,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                </div>
             </div>
          </Link>
-      </div>
+      </div >
    )
 }
 
