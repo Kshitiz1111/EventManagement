@@ -1,9 +1,17 @@
 import EventForm from "@/components/shared/EventForm"
 import { auth } from "@clerk/nextjs"
 
+
+
 const CreateEvent = () => {
    const { sessionClaims } = auth();
    const userId = sessionClaims?.userId as string;
+
+   if (userId === null) {
+      return <div>Loading...</div>; // Or any loading indicator you prefer
+   }
+
+   console.log('userId', userId);
    return (
       <>
          <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
