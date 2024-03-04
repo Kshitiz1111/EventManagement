@@ -35,7 +35,7 @@ export async function createEvent({ userId, event, path }: CreateEventParams) {
 
     const organizer = await User.findById(userId)
     if (!organizer) throw new Error('Organizer not found')
-   console.log(userId)
+
     const newEvent = await Event.create({ ...event, category: event.categoryId, organizer: userId })
     revalidatePath(path)
 
@@ -155,7 +155,9 @@ export async function getRelatedEventsByCategory({
   try {
     await connectToDatabase()
 
-    const skipAmount = (Number(page) - 1) * limit
+    const skipAmount = (Number(page) - 1) * limit;
+    //$and is a logical operator that allows you to specify multiple conditions that must all be true for a document to match the query.
+    // $ne operator is used to specify a "not equal" condition
     const conditions = { $and: [{ category: categoryId }, { _id: { $ne: eventId } }] }
 
     const eventsQuery = Event.find(conditions)
