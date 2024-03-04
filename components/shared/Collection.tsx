@@ -1,5 +1,6 @@
 import { IEvent } from "@/lib/database/models/even.model"
 import Card from "./Card";
+import Pagination from "./Pagination";
 
 type CollectionProps = {
    data: IEvent[],
@@ -12,7 +13,7 @@ type CollectionProps = {
    urlParamName?: string,
 }
 
-const Collection = ({ data, emptyTitle, emptyStateSubtext, collectionType, limit, page, totalPages, urlParamName }: CollectionProps) => {
+const Collection = ({ data, emptyTitle, emptyStateSubtext, collectionType, limit, page, totalPages = 0, urlParamName }: CollectionProps) => {
    return (
       <>
          {data.length > 0 ? (
@@ -30,9 +31,9 @@ const Collection = ({ data, emptyTitle, emptyStateSubtext, collectionType, limit
                   })}
                </ul>
 
-               {/* {totalPages > 1 && ( */}
-               {/* // <Pagination urlParamName={urlParamName} page={page} totalPages={totalPages} /> */}
-               {/* )} */}
+               {totalPages > 1 && (
+                  <Pagination urlParamName={urlParamName} page={page} totalPages={totalPages} />
+               )}
             </div>
          ) : (
             <div className="flex-center wrapper min-h-[200px] w-full flex-col gap-3 rounded-[14px] bg-grey-50 py-28 text-center">

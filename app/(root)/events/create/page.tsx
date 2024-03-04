@@ -7,9 +7,7 @@ const CreateEvent = () => {
    const { sessionClaims } = auth();
    const userId = sessionClaims?.userId as string;
 
-   if (userId === null) {
-      return <div>Loading...</div>; // Or any loading indicator you prefer
-   }
+   if (!userId) return <p>loading...</p>
 
    console.log('userId', userId);
    return (
