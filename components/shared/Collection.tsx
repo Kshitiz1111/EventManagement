@@ -1,6 +1,7 @@
 import { IEvent } from "@/lib/database/models/even.model"
 import Card from "./Card";
 import Pagination from "./Pagination";
+import { IOrder } from "@/lib/database/models/order.model";
 
 type CollectionProps = {
    data: IEvent[],
@@ -11,21 +12,22 @@ type CollectionProps = {
    page: number | string,
    totalPages?: number,
    urlParamName?: string,
+   orders?: any,
 }
+const Collection = ({ data, emptyTitle, emptyStateSubtext, collectionType, limit, page, totalPages = 0, urlParamName, orders }: CollectionProps) => {
 
-const Collection = ({ data, emptyTitle, emptyStateSubtext, collectionType, limit, page, totalPages = 0, urlParamName }: CollectionProps) => {
    return (
       <>
          {data.length > 0 ? (
             <div className="flex flex-col items-center gap-10">
                <ul className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
-                  {data.map((event) => {
+                  {data.map((event, index) => {
                      const hasOrderLink = collectionType === 'Events_Organized';
                      const hidePrice = collectionType === 'My_Tickets';
 
                      return (
                         <li key={event._id} className="flex justify-center">
-                           <Card event={event} hasOrderLink={hasOrderLink} hidePrice={hidePrice} />
+                           <Card event={event} hasOrderLink={hasOrderLink} hidePrice={hidePrice} orderId={orders ? orders[index]._id : ''} />
                         </li>
                      )
                   })}

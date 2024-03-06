@@ -5,20 +5,31 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import DeleteConfirmation from './DeleteConfirmation'
-
+import Qrcode from './Qrcode'
+import { Button } from "@/components/ui/button"
+import {
+   Dialog,
+   DialogClose,
+   DialogContent,
+   DialogDescription,
+   DialogFooter,
+   DialogHeader,
+   DialogTitle,
+   DialogTrigger,
+} from "@/components/ui/dialog"
 
 type CardProps = {
    event: IEvent,
    hasOrderLink?: boolean,
    hidePrice?: boolean,
+   orderId?: string;
 }
-const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
+const Card = ({ event, hasOrderLink, hidePrice, orderId }: CardProps) => {
    const { sessionClaims } = auth();
    const userId = sessionClaims?.userId as string;
    // if (!userId) return <p>loading...</p>
 
    const isEventCreator = userId === event.organizer?._id.toString();
-
    return (
       <div className="group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]">
          <Link
@@ -76,7 +87,38 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                         <Image src="/assets/icons/arrow.svg" alt="search" width={10} height={10} />
                      </Link>
                   )}
+
                </div>
+               {orderId && (
+                  <>
+                     <Dialog>
+                        <DialogTrigger asChild>
+                           <Button variant="outline">Get QR code</Button>
+                        </DialogTrigger>
+                        <DialogContent className="flex flex-col items-center bg-white sm:max-w-md">
+                           <DialogHeader>
+                              <DialogTitle>{event.title}</DialogTitle>
+                              <DialogDescription>
+                                 Show this QR code on entry.
+                              </DialogDescription>
+                           </DialogHeader>
+                           <div className="flex items-center space-x-2">
+                              <div className="grid flex-1 gap-2">
+                                 <Qrcode orderId={orderId} />
+                              </div>
+                           </div>
+                           <DialogFooter className="sm:justify-start">
+                              <DialogClose asChild>
+                                 <Button type="button" variant="default">
+                                    Close
+                                 </Button>
+                              </DialogClose>
+                           </DialogFooter>
+                        </DialogContent>
+                     </Dialog>
+                     {/* <p className="text-primary-500">Order Id :{orderId}</p> */}
+                  </>
+               )}
             </div>
          </div>
       </div >
