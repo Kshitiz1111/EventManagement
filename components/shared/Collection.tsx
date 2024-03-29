@@ -15,7 +15,6 @@ type CollectionProps = {
    orders?: any,
 }
 const Collection = ({ data, emptyTitle, emptyStateSubtext, collectionType, limit, page, totalPages = 0, urlParamName, orders }: CollectionProps) => {
-
    return (
       <>
          {data.length > 0 ? (
@@ -26,8 +25,12 @@ const Collection = ({ data, emptyTitle, emptyStateSubtext, collectionType, limit
                      const hidePrice = collectionType === 'My_Tickets';
 
                      return (
-                        <li key={event._id} className="flex justify-center">
-                           <Card event={event} hasOrderLink={hasOrderLink} hidePrice={hidePrice} orderId={orders ? orders[index]._id : ''} />
+                        <li key={event?._id} className="flex justify-center">
+                           {event !== null ?
+                              <Card event={event} hasOrderLink={hasOrderLink} hidePrice={hidePrice} orderId={orders ? orders[index]?._id : ''} />
+                              :
+                              ""
+                           }
                         </li>
                      )
                   })}

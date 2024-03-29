@@ -1,6 +1,7 @@
 import CheckoutButton from '@/components/shared/CheckoutButton';
 import Collection from '@/components/shared/Collection';
 import { getEventById, getRelatedEventsByCategory } from '@/lib/actions/event.action'
+import { getOrdersByEvent } from '@/lib/actions/order.action';
 import { formatDateTime } from '@/lib/utils';
 import { SearchParamProps } from '@/types'
 import Image from 'next/image';
@@ -12,6 +13,12 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
       eventId: event._id,
       page: searchParams.page as string,
    })
+
+   const eventId = id;
+   const searchText = (searchParams?.query as string) || '';
+
+   const orders: any = await getOrdersByEvent({ eventId, searchString: searchText })
+   console.log("event", event);
    return (
       <>
          <section className="flex justify-center bg-primary-50 bg-dotted-pattern bg-contain">
@@ -45,7 +52,32 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
                      </div>
                   </div>
 
-                  <CheckoutButton event={event} />
+
+
+                  <div>
+                     {((event.capacity - orders.length) === 0) ?
+                        <>
+                           <strong>available seats</strong>
+                           <div className='flex items-center gap-3 mb-2'>
+                              <Image src="/assets/seat.png" alt="location" width={32} height={32} />
+                              {event.capacity - orders.length}
+                           </div>
+                           <span className=' bg-yellow-200 p-2 rounded-full text-black'>Sorry! No Seat Available</span>
+                        </>
+                        :
+                        <>
+                           <div className='mb-3'>
+                              <strong>available seats</strong>
+                              <div className='flex items-center gap-3'>
+                                 <Image src="/assets/seat.png" alt="location" width={32} height={32} />
+                                 {event.capacity - orders.length}
+                              </div>
+                           </div>
+                           <CheckoutButton event={event} />
+                        </>
+                     }
+
+                  </div>
 
                   <div className="flex flex-col gap-5">
                      <div className='flex gap-2 md:gap-3'>

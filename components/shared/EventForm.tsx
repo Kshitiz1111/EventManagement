@@ -318,6 +318,28 @@ const EventForm = ({
                      </FormItem>
                   )}
                />
+               <FormField
+                  control={form.control}
+                  name="capacity"
+                  render={({ field }) => (
+                     <FormItem className="w-full">
+                        <FormControl>
+                           <div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+                              <Image
+                                 src="/assets/seat.png"
+                                 alt="seat"
+                                 width={24}
+                                 height={24}
+                              />
+
+                              <Input type="number" placeholder="total seats" {...field} className="input-field" />
+                           </div>
+
+                        </FormControl>
+                        <FormMessage />
+                     </FormItem>
+                  )}
+               />
             </div>
 
 
