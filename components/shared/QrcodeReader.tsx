@@ -10,6 +10,12 @@ const QrcodeReader = ({ orders }: any) => {
    console.log("from qrreader: ", orders)
 
    const handleRead = (result: any) => {
+      if (orders.length < 1) {
+         setOrderIdVerified(false);
+         setTimeout(() => {
+            setOrderIdVerified(undefined);
+         }, 2000);
+      }
       orders.map((order: any) => {
          console.log(order._id, result.text)
          if (order._id === result.text) {
